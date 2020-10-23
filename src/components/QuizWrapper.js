@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import QuestionItem from "./QuestionItem";
 import styled from 'styled-components';
+import QuizFinished from "./QuizFinished";
 
 
 const Wrapper = styled('div')`
@@ -28,12 +29,12 @@ const QuizWrapper = ({questions}) => {
 
 
     const onCheckAnswer = (questionId, answer) => {
-        console.log(questionIndex, answer);
+        //console.log(questionIndex, answer);
         //find the answer to current Question
         if(questionItem.correctAnswer === answer){
             setCorrectAnswers([...correctAnswers, answer]);
         }
-        if(questionIndex < questions.length - 1){
+        if(questionIndex < questions.length){
             //show next question - if it's not a finish of Quiz
             setQuestionIndex(questionIndex + 1);
         }
@@ -41,14 +42,16 @@ const QuizWrapper = ({questions}) => {
 
     return(
             <Wrapper className="quiz_wrapper">
-                {[questionItem].map((item, index) => {
-                    return <QuestionItem key={index}
-                                         title={item.title}
-                                         questions={item.questions}
-                                         topicId={index}
-                                         action={onCheckAnswer}
-                    />
-                }) }
+                { questionIndex <= questions.length - 1 ?
+                    [questionItem].map((item, index) => {
+                        return <QuestionItem key={index}
+                                             title={item.title}
+                                             questions={item.questions}
+                                             topicId={index}
+                                             action={onCheckAnswer}
+                        />
+                    })
+                : <QuizFinished result={correctAnswers.length} totalQuestions={questions.length}/> }
             </Wrapper>
         );
 }

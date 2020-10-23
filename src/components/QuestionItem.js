@@ -11,7 +11,7 @@ const Item = styled('div')`
 `;
 
 const Button = styled('button')`
-    padding: 15px 0px;
+    padding: 10px 0px;
     color: #fff;
     font-size: 16px;
     background-color: #2196f3;
